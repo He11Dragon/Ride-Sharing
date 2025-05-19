@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideShare - Driver Dashboard</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-car-side me-2"></i>RideShare
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-home me-1"></i>Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-history me-1"></i>Ride History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-user me-1"></i>Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-cog me-1"></i>Settings</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <span class="navbar-text me-3">
+                        <i class="fas fa-user-circle me-1"></i><span id="user-name">Driver</span>
+                    </span>
+                    <button id="logout-btn" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Welcome Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h2 class="card-title">Welcome, <span id="welcome-name">Driver</span>!</h2>
+                        <p class="card-text">Here's your driver dashboard. Manage your rides and check your earnings.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status and Metrics Section -->
+        <div class="row mb-4">
+            <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                <div class="card text-white bg-success h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-toggle-on fa-3x mb-3"></i>
+                        <h4 class="card-title">Status</h4>
+                        <div class="form-check form-switch d-flex justify-content-center mt-3">
+                            <input class="form-check-input me-2" type="checkbox" id="driver-status" checked>
+                            <label class="form-check-label" for="driver-status">Available</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                <div class="card text-white bg-primary h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-route fa-3x mb-3"></i>
+                        <h4 class="card-title">Today's Rides</h4>
+                        <p class="display-4 mb-0">5</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                <div class="card text-white bg-info h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-star fa-3x mb-3"></i>
+                        <h4 class="card-title">Rating</h4>
+                        <p class="display-4 mb-0">4.8</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-white bg-warning h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-dollar-sign fa-3x mb-3"></i>
+                        <h4 class="card-title">Today's Earnings</h4>
+                        <p class="display-4 mb-0">$125</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Ride Requests Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h3 class="card-title mb-0"><i class="fas fa-bell me-2"></i>New Ride Requests</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Passenger</th>
+                                        <th>Pickup</th>
+                                        <th>Dropoff</th>
+                                        <th>Distance</th>
+                                        <th>Fare</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ride-requests">
+                                    <tr>
+                                        <td>10:15 AM</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="text-primary me-2"><i class="fas fa-user-circle fa-lg"></i></div>
+                                                <div>John Doe</div>
+                                            </div>
+                                        </td>
+                                        <td>123 Main St</td>
+                                        <td>456 Elm St</td>
+                                        <td>3.2 km</td>
+                                        <td>$15.50</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success me-1">
+                                                <i class="fas fa-check me-1"></i>Accept
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-times me-1"></i>Decline
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:20 AM</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="text-primary me-2"><i class="fas fa-user-circle fa-lg"></i></div>
+                                                <div>Jane Smith</div>
+                                            </div>
+                                        </td>
+                                        <td>789 Oak St</td>
+                                        <td>321 Pine St</td>
+                                        <td>4.5 km</td>
+                                        <td>$18.75</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success me-1">
+                                                <i class="fas fa-check me-1"></i>Accept
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-times me-1"></i>Decline
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Ride Section -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0"><i class="fas fa-car me-2"></i>Active Ride</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="no-active-ride" style="display:none;">
+                            <div class="text-center p-4">
+                                <i class="fas fa-car-side fa-4x text-muted mb-3"></i>
+                                <h4>No active rides at the moment</h4>
+                                <p class="text-muted">New ride requests will appear in your dashboard.</p>
+                            </div>
+                        </div>
+                        
+                        <div id="active-ride">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="text-primary me-3"><i class="fas fa-user-circle fa-3x"></i></div>
+                                <div>
+                                    <h4 class="mb-0">Michael Brown</h4>
+                                    <div class="text-muted">Premium Ride • 2.8 km</div>
+                                </div>
+                                <div class="ms-auto">
+                                    <span class="badge bg-primary">In Progress</span>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="fas fa-map-marker-alt text-danger me-2"></i>Pickup Location</label>
+                                        <div class="form-control">555 Cedar Ave</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="fas fa-map-pin text-success me-2"></i>Dropoff Location</label>
+                                        <div class="form-control">777 Maple Dr</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="text-center">
+                                    <div class="text-muted mb-1">Pickup Time</div>
+                                    <div class="fw-bold">10:30 AM</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-muted mb-1">Est. Arrival</div>
+                                    <div class="fw-bold">10:42 AM</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-muted mb-1">Fare</div>
+                                    <div class="fw-bold">$22.50</div>
+                                </div>
+                            </div>
+                            
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-outline-secondary">
+                                    <i class="fas fa-phone me-1"></i>Contact
+                                </button>
+                                <button class="btn btn-success">
+                                    <i class="fas fa-flag-checkered me-1"></i>Complete Ride
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-header bg-info text-white">
+                        <h3 class="card-title mb-0"><i class="fas fa-map-marked-alt me-2"></i>Navigation</h3>
+                    </div>
+                    <div class="card-body p-0 d-flex flex-column justify-content-center align-items-center bg-light text-center">
+                        <div class="p-4">
+                            <i class="fas fa-map-marked-alt fa-4x text-info mb-3"></i>
+                            <h4>Map View</h4>
+                            <p class="text-muted">Interactive map would be displayed here</p>
+                            <button class="btn btn-info mt-2">
+                                <i class="fas fa-directions me-1"></i>Open Navigation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Rides Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h3 class="card-title mb-0"><i class="fas fa-history me-2"></i>Recent Rides</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Passenger</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Distance</th>
+                                        <th>Status</th>
+                                        <th>Fare</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-rides">
+                                    <tr>
+                                        <td>2025-05-12</td>
+                                        <td>Sarah Johnson</td>
+                                        <td>123 Main St</td>
+                                        <td>456 Elm St</td>
+                                        <td>3.2 km</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                        <td>$25.50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2025-05-12</td>
+                                        <td>Robert Chen</td>
+                                        <td>789 Oak St</td>
+                                        <td>321 Pine St</td>
+                                        <td>4.5 km</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                        <td>$18.75</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2025-05-11</td>
+                                        <td>Emily White</td>
+                                        <td>555 Cedar Ave</td>
+                                        <td>777 Maple Dr</td>
+                                        <td>5.1 km</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                        <td>$32.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-eye me-1"></i>View All Rides
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h3 class="card-title mb-0"><i class="fas fa-dollar-sign me-2"></i>Earnings Summary</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card border-success h-100">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-success"><i class="fas fa-calendar-day me-2"></i>Today</h5>
+                                        <h3 class="mb-0">$125.00</h3>
+                                        <div class="text-muted small">5 rides completed</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card border-primary h-100">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-primary"><i class="fas fa-calendar-week me-2"></i>This Week</h5>
+                                        <h3 class="mb-0">$745.50</h3>
+                                        <div class="text-muted small">28 rides completed</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-info h-100">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-info"><i class="fas fa-calendar-alt me-2"></i>This Month</h5>
+                                        <h3 class="mb-0">$2,380.25</h3>
+                                        <div class="text-muted small">92 rides completed</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h5>Weekly Performance</h5>
+                            <div class="bg-light p-4 text-center">
+                                <p class="text-muted">Weekly earnings chart would be displayed here</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-chart-line me-1"></i>Detailed Analysis
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary ms-2">
+                            <i class="fas fa-file-invoice-dollar me-1"></i>Payment History
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Area -->
+        <div id="notification" class="alert" style="display:none;"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-car-side me-2"></i>RideShare</h5>
+                    <p>Your trusted ride-sharing platform for safe and convenient travel.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">About Us</a></li>
+                        <li><a href="#" class="text-white">Contact</a></li>
+                        <li><a href="#" class="text-white">Terms of Service</a></li>
+                        <li><a href="#" class="text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Connect With Us</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <small>&copy; 2025 RideShare. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/driver-dashboard.js"></script>
+</body>
+</html>
